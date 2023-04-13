@@ -1,74 +1,85 @@
-#include <stdlib.h>
+#include "main.h"
 #include <stdio.h>
-
+#include <stdlib.h>
 /**
- * _atoi -> Convert string to integer
- *
- * @s: Input
- *
- * Return: Integer Converted
+ * multiply - function to multiply two numbers
+ * @num1: The first nmber
+ * @num2: The second number
+ * Return: the product of the two numbers passed
  */
+int multiply(int num1, int num2)
+{
+	return (num1 * num2);
+}
+/**
+ * is_digit - the function to check foor integer inputs
+ * @str: the input array
+ * Return: 1 for integer , 0 for not integr
+ */
+int is_digit(char *str)
+{
+	int i;
 
+	for (i = 0; str[i]; i++)
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+
+	}
+	return (1);
+}
+/**
+ * _atoi - function to convert str to int
+ * @s: the input array
+ * Return: outcome integer
+ */
 int _atoi(char *s)
 {
-	int i;
-	int sin;
-	unsigned int digit;
+	int sign = 1, i = 0;
+	unsigned int rest = 0;
 
-	i = 0;
-	sin = 1;
-	digit = 0;
-	while (s[i] != '\0')
+	while (!(s[i] <= '9' && s[i] >= '0') && (s[i] != '\0'))
 	{
 		if (s[i] == '-')
-			sin *= -1;
-		else if (s[i] >= '0' && s[i] <= '9')
-		{
-			digit = (digit * 10) + (s[i] - '0');
-		}
-		else if (digit > 0)
-			break;
+			sign *= -1;
 		i++;
 	}
-	return (digit * sin);
+	while (s[i] <= '9' && (s[i] >= '0' && s[i] != '\0'))
+	{
+		rest = (rest * 10) + (s[i] - '0');
+		i++;
+	}
+	rest *= sign;
+	return (rest);
 }
-
 /**
- * main -> Entry
- *
- * @ac: Number Args
- * @av: Array String 2D
- *
- * Return: Depend Condition
+ * main - main entry of the program
+ * @argc: number of arguments
+ * @argv: array of arguments
+ * Return: 0 as succes
  */
-
-int main(int ac, char **av)
+int main(int argc, char *argv[])
 {
-	int i;
-	int j;
-	unsigned int mul;
-	int num1;
-	int num2;
+	int num1, num2;
+	int product;
 
-	if (ac != 3)
+	if (argc != 3)
 	{
 		printf("Error\n");
 		exit(98);
 	}
-	for (i = 1; i < ac; i++)
+
+	if (!is_digit(argv[1]) || !is_digit(argv[2]))
 	{
-		for (j = 0; av[i][j] != '\0'; j++)
-		{
-			if (av[i][j] < '0' || av[i][j] > '9')
-			{
-				printf("Error\n");
-				exit(98);
-			}
-		}
+		printf("Error\n");
+		exit(98);
 	}
-	num1 = _atoi(av[1]);
-	num2 = _atoi(av[2]);
-	mul = num1 * num2;
-	printf("%u\n", mul);
-	return (0);
+
+	num1 = _atoi(argv[1]);
+	num2 = _atoi(argv[2]);
+
+	product = num1 * num2;
+
+printf("%d\n", product);
+return (0);
 }
