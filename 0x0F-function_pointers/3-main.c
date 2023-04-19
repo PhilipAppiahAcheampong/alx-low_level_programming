@@ -28,3 +28,4 @@ int main(int ac, char **av)
 	}
 	printf("%d\n", op(atoi(av[1]), atoi(av[3])));
 	return (0);
+}
